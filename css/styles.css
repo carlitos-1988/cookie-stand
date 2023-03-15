@@ -15,15 +15,6 @@ button{
 li {
     font-family: 'Sofia Sans Semi Condensed', sans-serif;
 }
-#store1, #store4{
-    background-color: #FCFFE7;
-}
-#store2, #store5{
-    background-color: #EB455F;
-}
-#store3{
-    background-color: #2B3467;
-}
 
 div{
     
@@ -44,6 +35,11 @@ div{
 footer{
   padding-top: 50px;
 }
+
+th,td {
+    border: 1px solid black;
+}
+
 
 
 

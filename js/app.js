@@ -1,5 +1,20 @@
 'use strict';
 
+function Store(nameOfStore,minimumCustomers,maximumCustomers,averageCookies) {
+  this.nameOfStore = nameOfStore;
+  this.minimumCustomers = minimumCustomers;
+  this.maximumCustomers = maximumCustomers;
+  this.averageCookies = averageCookies;
+  this.totalCookies =0;
+
+  this.countCustomers = [];
+  this.arrayWithText = [];
+}
+
+
+
+
+
 let seattleStore = {
   salmonStore: 'Seattle Store',
   minCustomers : 23,
@@ -116,10 +131,6 @@ let tokyoStore = {
 
 
 };
-
-
-
-
 
 let dubaiStore ={
   salmonStore:'Dubai Store',
@@ -266,6 +277,8 @@ let limaStore = {
     }
   },
 
+
+
   //adds the needed string for formatting the output to be placed in DOM
   displaySaleOfDay : function(){
     this.arrayWithText = displayElemntsOfArray(this.countCustomers);
@@ -282,6 +295,12 @@ let limaStore = {
   addToDom : function(){
     listItemsInStore(this.totalCookies,this.arrayWithText,this.storeLocation, this.salmonStore);
   },
+
+
+
+
+
+
 
   dotItALL : function(){
 
@@ -328,6 +347,9 @@ function generateCustomers(minCust, maxCust){
   return result;
 }
 
+//refactoring to add generateCustomers helper method
+
+
 //some function to iterate customers array and display as appropriate
 
 function displayElemntsOfArray(arr){
@@ -348,6 +370,8 @@ function displayElemntsOfArray(arr){
   return arrayWithText;
 
 }
+
+
 
 function countTotalCookies(arr){
   let sumOfCookies=0;

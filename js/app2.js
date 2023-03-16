@@ -33,6 +33,7 @@ function Store(nameOfStore,minimumCustomers,maximumCustomers,averageCookies) {
   this.arrayWithText = [];
   this.totalCookiesPerHour = [];
   this.cookiesSoldPerHour = [];
+  // this.footerArrayForCookies = [];
 }
 //function to show array as text to console
 Store.prototype.displayArrayWithText = function() {
@@ -44,7 +45,7 @@ Store.prototype.displayArrayWithText = function() {
 //single prototype function to generate needed data to be used.
 Store.prototype.generateData = function() {
   //iterate through workday array to genrate random customer number per hours available
-  console.log(this.maximumCustomers + ' ' + this.minimumCustomers);
+  //console.log(this.maximumCustomers + ' ' + this.minimumCustomers);
   for(let i=0; i<workDayArray.length; i++){
     let result = Math.ceil(Math.random() * (this.maximumCustomers - this.minimumCustomers) + this.minimumCustomers);
     result *= Math.ceil(this.averageCookies);
@@ -55,8 +56,9 @@ Store.prototype.generateData = function() {
   //the average cookies and appended to array with text.also increasing cookies sold for total cookies sold.
   for(let i=0; i<this.countCustomers.length; i++){
     let cookiesSold = Math.ceil(this.averageCookies * this.countCustomers[i]);
-    this.arrayWithText[i] = workDayArray[i] + ':'+ cookiesSold + ' cookies';
-    this.totalCookiesPerHour[i] = this.countCustomers[i] + ' cookies';
+    // this.arrayWithText[i] = workDayArray[i] + ':'+ cookiesSold + ' cookies';
+    this.totalCookiesPerHour[i] = this.countCustomers[i] ;
+    // this.footerArrayForCookies[i] = this.countCustomers[i];
     this.totalCookies += cookiesSold;
   }
 };
@@ -82,20 +84,10 @@ Store.prototype.displayToDom = function() {
   tableRowElement.appendChild(lastItemtobePlaced);
 };
 
-function generateHourlyTotals(storeArray) {
-  let generatedHours = [];
-  let hourlyTotal = 0;
-  for(let i =0; i<storeArray.length; i++){
-    for(let j=0; j<storeArray[i].cookiesSoldPerHour.length; j++){
-      let numberToPush = storeArray[i].cookiesSoldPerHour[j];
-      hourlyTotal += numberToPush;
-      generatedHours.push(hourlyTotal);
-      console.log(hourlyTotal);
-    }
-  }
-  console.log(generatedHours);
-}
 
+//generateFooterData();
+
+//do it all function
 Store.prototype.doitAll = function() {
   this.generateData();
   this.displayToDom();
@@ -112,5 +104,34 @@ ParisStore.doitAll();
 let LimaStore = new Store('Lima', 2, 16, 4.6);
 LimaStore.doitAll();
 
-let storeArray = [SeatleStore, TokyoStore, DubaiStore, ParisStore];
-generateHourlyTotals(storeArray);
+let storeArray = [SeatleStore, TokyoStore, DubaiStore, ParisStore,LimaStore];
+let footer = document.getElementById('table-footer');
+
+function generateFooterData(){
+
+  const storeHeader = document.createElement('th');
+  storeHeader.textContent = 'Totals';
+  footer.appendChild(storeHeader);
+
+  let finalTotalCookies = 0;
+
+  for(let i = 0; i<workDayArray.length;i++){
+    let totalCookiesForHourSold = 0;
+    for(let j=0; j<storeArray.length;j++){
+      let cookieAmount = storeArray[j].totalCookiesPerHour[i];
+      totalCookiesForHourSold += cookieAmount;
+    }
+    console.log(totalCookiesForHourSold);
+    const tableData = document.createElement('td');
+    tableData.textContent = totalCookiesForHourSold;
+    footer.appendChild(tableData);
+    finalTotalCookies += totalCookiesForHourSold;
+  }
+
+  const finalValueOfCookies = document.createElement('td');
+  finalValueOfCookies.textContent = finalTotalCookies + ' cookies';
+  footer.appendChild(finalValueOfCookies);
+
+
+}
+generateFooterData();

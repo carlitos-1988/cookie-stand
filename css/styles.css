@@ -40,7 +40,13 @@ th,td {
     border: 1px solid black;
 }
 
-
+.my-pictures {
+    display: flex;
+    flex-direction: row;
+    justify-items: center;
+    width: 100px;
+    height: 100px;
+}
 
 
 

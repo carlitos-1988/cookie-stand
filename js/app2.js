@@ -1,8 +1,10 @@
 'use strict';
 
+
 let workDayArray = ['6am', '7am', '8am', '9am', '10am', '11am', '12pm', '1pm', '2pm', '3pm', '4pm', '5pm', '6pm', '7pm'];
 let tableHeadElement = document.getElementById('table-header');
 const tableBodyElement = document.getElementById('table-body');
+const formElements = document.getElementById('generate-store');
 
 //Funciton to generate header once
 function generateHeader(){
@@ -93,6 +95,7 @@ Store.prototype.doitAll = function() {
   this.displayToDom();
 };
 
+//generates sample data for the Store
 let SeatleStore = new Store('Seattle', 23, 65, 6.3);
 SeatleStore.doitAll();
 let TokyoStore = new Store('Tokyo', 3, 24, 1.2);
@@ -105,6 +108,7 @@ let LimaStore = new Store('Lima', 2, 16, 4.6);
 LimaStore.doitAll();
 
 let storeArray = [SeatleStore, TokyoStore, DubaiStore, ParisStore,LimaStore];
+//global scoped footer data
 let footer = document.getElementById('table-footer');
 
 function generateFooterData(){
@@ -121,7 +125,7 @@ function generateFooterData(){
       let cookieAmount = storeArray[j].totalCookiesPerHour[i];
       totalCookiesForHourSold += cookieAmount;
     }
-    console.log(totalCookiesForHourSold);
+    //console.log(totalCookiesForHourSold);
     const tableData = document.createElement('td');
     tableData.textContent = totalCookiesForHourSold;
     footer.appendChild(tableData);
@@ -135,3 +139,13 @@ function generateFooterData(){
 
 }
 generateFooterData();
+
+formElements.addEventListener('submit',function(event){
+  event.preventDefault();
+  let {store_name, store_min, store_max, average_customers} = event.target;
+  let newStore = new Store(store_name.value, store_min.value, store_max.value, average_customers.value );
+  console.log(newStore);
+  storeArray.push(newStore);
+  newStore.doitAll();
+});
+
